@@ -11,7 +11,7 @@
     <style>
         body {
             background-color: #05070c;
-            /* Cyber hoodie hacker image with dark overlay filter matching the reference image */
+            /* Cyber hoodie hacker image with dark overlay filter */
             background-image: linear-gradient(rgba(5, 7, 12, 0.85), rgba(5, 7, 12, 0.85)), 
                               url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1920');
             background-size: cover;
@@ -21,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* Ambient neon background glows mirroring the red/cyan light leaks */
+        /* Ambient neon background glows */
         body::before {
             content: '';
             position: fixed;
@@ -104,14 +104,25 @@
                 <!-- Instruction Box -->
                 <div class="bg-[#0d121f] border-l-2 border-red-500 rounded-r-xl p-3.5 text-xs leading-relaxed text-gray-400 mb-5">
                     ⚠️ Please provide a unique name combined with a symbol or number to create a secure password 
-                    <span class="text-gray-500 font-mono">(e.g., Kolkata@2025, Indian_Army).</span>
+                    <span class="text-gray-500 font-mono">(e.g., Kolkata@2025).</span>
                 </div>
 
                 <!-- Input Group Box -->
-                <div class="relative flex items-center mb-4">
+                <div class="relative flex items-center mb-2">
                     <input type="password" id="passwordInput" placeholder="Enter your password" maxlength="20"
                            class="w-full bg-[#121929] border border-slate-800 rounded-xl py-3 px-4 pr-16 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-red-500/70 transition-colors shadow-inner">
                     <button id="toggleBtn" class="absolute right-4 text-xs font-mono font-semibold text-gray-500 hover:text-cyan-400 transition-colors">SHOW</button>
+                </div>
+
+                <!-- NEW: Live Password Strength Meter -->
+                <div class="mb-5 w-full px-1">
+                    <div class="flex justify-between items-center mb-1.5">
+                        <span class="text-[10px] font-mono text-gray-500 tracking-wider uppercase">Signal Strength</span>
+                        <span id="strengthText" class="text-[10px] font-mono text-gray-600 tracking-widest uppercase">[ AWAITING_INPUT ]</span>
+                    </div>
+                    <div class="w-full bg-[#121929] h-1.5 rounded-full overflow-hidden border border-slate-800">
+                        <div id="strengthBar" class="h-full bg-transparent w-0 transition-all duration-300"></div>
+                    </div>
                 </div>
 
                 <!-- Toggle Switch & Length Count Group -->
@@ -161,9 +172,50 @@
         const outputContainer = document.getElementById('outputContainer');
         const generatedPassword = document.getElementById('generatedPassword');
         const copyBtn = document.getElementById('copyBtn');
+        
+        // New Strength Indicator Elements
+        const strengthText = document.getElementById('strengthText');
+        const strengthBar = document.getElementById('strengthBar');
 
+        // Function to calculate strength score (0 to 4)
+        function calculateStrength(password) {
+            let score = 0;
+            if (!password) return 0;
+            if (password.length > 7) score += 1;
+            if (/[A-Z]/.test(password)) score += 1;
+            if (/[0-9]/.test(password)) score += 1;
+            if (/[^A-Za-z0-9]/.test(password)) score += 1;
+            return score;
+        }
+
+        // Main input event listener updated with strength UI logic
         passwordInput.addEventListener('input', () => {
-            charCount.textContent = passwordInput.value.length;
+            const val = passwordInput.value;
+            charCount.textContent = val.length;
+            
+            const score = calculateStrength(val);
+            
+            // Update visual meter based on score
+            if (val.length === 0) {
+                strengthText.textContent = '[ AWAITING_INPUT ]';
+                strengthText.className = 'text-[10px] font-mono text-gray-600 tracking-widest uppercase';
+                strengthBar.style.width = '0%';
+            } else if (score <= 2) {
+                strengthText.textContent = '[ WEAK_SECURITY ]';
+                strengthText.className = 'text-[10px] font-mono text-red-500 tracking-widest uppercase';
+                strengthBar.style.width = '33%';
+                strengthBar.className = 'h-full bg-red-500 transition-all duration-300 shadow-[0_0_8px_rgba(239,68,68,0.6)]';
+            } else if (score === 3) {
+                strengthText.textContent = '[ MEDIUM_INTEGRITY ]';
+                strengthText.className = 'text-[10px] font-mono text-yellow-500 tracking-widest uppercase';
+                strengthBar.style.width = '66%';
+                strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300 shadow-[0_0_8px_rgba(234,179,8,0.6)]';
+            } else {
+                strengthText.textContent = '[ STRONG_ENCRYPTION ]';
+                strengthText.className = 'text-[10px] font-mono text-cyan-400 tracking-widest uppercase';
+                strengthBar.style.width = '100%';
+                strengthBar.className = 'h-full bg-cyan-400 transition-all duration-300 shadow-[0_0_8px_rgba(6,182,212,0.6)]';
+            }
         });
 
         toggleBtn.addEventListener('click', () => {
