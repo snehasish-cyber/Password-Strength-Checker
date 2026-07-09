@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <!-- Tailwind CSS for sleek styling and gradients -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for the social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #05070c;
+            /* Cyber hoodie hacker image with dark overlay filter matching the reference image */
+            background-image: linear-gradient(rgba(5, 7, 12, 0.85), rgba(5, 7, 12, 0.85)), 
+                              url('https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ambient neon background glows mirroring the red/cyan light leaks */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 20%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(239, 68, 68, 0.15);
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 20%;
+            right: 10%;
+            width: 350px;
+            height: 350px;
+            background: rgba(6, 182, 212, 0.12);
+            filter: blur(130px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Scattered tech background overlay lines */
+        .cyber-grid {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 24, 38, 0) 95%, rgba(239, 68, 68, 0.03) 95%),
+                        linear-gradient(90deg, rgba(18, 24, 38, 0) 95%, rgba(6, 182, 212, 0.03) 95%);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-200 flex flex-col items-center py-8 px-4 font-sans selection:bg-red-500 selection:text-white">
+
+    <!-- Ambient Grid Effect System -->
+    <div class="cyber-grid"></div>
+
+    <!-- Main Content Container Block -->
+    <div class="relative z-10 flex flex-col items-center w-full">
+        
+        <!-- Top Profile Section -->
+        <div class="flex flex-col items-center mb-6">
+            <div class="w-24 h-24 rounded-full border-4 border-red-500/80 overflow-hidden shadow-lg shadow-red-500/20 mb-3 bg-slate-900/90 flex items-center justify-center backdrop-blur-sm">
+                <i class="fa-solid fa-user text-4xl text-red-500 animate-pulse"></i>
+            </div>
+            <!-- Title with Red Cyber Accent Linkage -->
+            <h1 class="text-4xl font-bold tracking-wide text-red-500 mb-1 text-center drop-shadow-[0_0_12px_rgba(239,68,68,0.4)]">Password Strength Checker</h1>
+            <p class="text-xs font-mono text-cyan-400 tracking-widest uppercase mb-1">SYSTEM STATUS: BREACH_MONITOR_ACTIVE</p>
+            <p class="text-sm text-gray-400 font-medium tracking-wide text-center">Developed by Snehasish, Adrisha & Anish</p>
+            
+            <!-- Social Icons -->
+            <div class="flex space-x-5 mt-3 text-gray-500">
+                <a href="#" class="hover:text-red-400 transition-colors"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-x-twitter text-lg"></i></a>
+                <a href="#" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+            </div>
+        </div>
+
+        <!-- Main Container Card -->
+        <div class="w-full max-w-md bg-[#0d111a]/95 border border-red-500/20 rounded-2xl p-5 shadow-2xl shadow-red-950/20 backdrop-blur-md">
+            
+            <!-- Top Tab Selector -->
+            <div class="w-full bg-gradient-to-r from-red-500 to-cyan-500 p-[1px] rounded-xl mb-5 shadow-lg shadow-red-500/10">
+                <button class="w-full bg-[#111724] py-2.5 rounded-xl text-center font-mono font-semibold tracking-widest text-sm text-red-400 transition-all uppercase">
+                    [ analyze_encrypt ]
+                </button>
+            </div>
+
+            <!-- Inside Inner Section Container -->
+            <div class="bg-[#080b12] border border-slate-900 rounded-xl p-5">
+                <h2 class="text-cyan-400 font-mono font-semibold text-sm mb-4 tracking-wider uppercase flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> Generate Secure Password
+                </h2>
+
+                <!-- Instruction Box -->
+                <div class="bg-[#0d121f] border-l-2 border-red-500 rounded-r-xl p-3.5 text-xs leading-relaxed text-gray-400 mb-5">
+                    ⚠️ Please provide a unique name combined with a symbol or number to create a secure password 
+                    <span class="text-gray-500 font-mono">(e.g., Kolkata@2025, Indian_Army).</span>
+                </div>
+
+                <!-- Input Group Box -->
+                <div class="relative flex items-center mb-4">
+                    <input type="password" id="passwordInput" placeholder="Enter your password" maxlength="20"
+                           class="w-full bg-[#121929] border border-slate-800 rounded-xl py-3 px-4 pr-16 text-sm text-white font-mono placeholder-gray-600 focus:outline-none focus:border-red-500/70 transition-colors shadow-inner">
+                    <button id="toggleBtn" class="absolute right-4 text-xs font-mono font-semibold text-gray-500 hover:text-cyan-400 transition-colors">SHOW</button>
+                </div>
+
+                <!-- Toggle Switch & Length Count Group -->
+                <div class="flex items-center justify-between mb-6 px-1">
+                    <div class="flex items-center space-x-3">
+                        <label class="relative inline-flex items-center cursor-pointer select-none">
+                            <input type="checkbox" id="urlSafeMode" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-500"></div>
+                            <span class="ms-3 text-xs font-mono tracking-wider text-gray-400">URL-safe mode</span>
+                        </label>
+                    </div>
+                    <div class="text-xs font-mono text-gray-500">
+                        <span id="charCount">0</span>/20
+                    </div>
+                </div>
+
+                <!-- Main Action Button -->
+                <button id="createBtn" class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-mono font-bold py-3 rounded-xl shadow-lg shadow-red-950 transition-all text-sm tracking-widest uppercase active:scale-[0.99]">
+                    Execute Generation
+                </button>
+
+                <!-- Warning Notification Message Box -->
+                <div class="mt-5 border-t border-slate-900 pt-4 flex items-start space-x-2 text-[11px] leading-relaxed text-red-400/70 text-center justify-center">
+                    <p>🔒 Security protocol: Keep your master input passphrase memorized; the generated algorithmic equivalent remains fully reproducible on demand.</p>
+                </div>
+
+                <!-- Output Display Container -->
+                <div id="outputContainer" class="mt-5 hidden border-t border-slate-900 pt-4">
+                    <label class="block text-xs font-mono text-cyan-400 mb-2 tracking-wider uppercase">Algorithmic Output Hash:</label>
+                    <div class="flex items-center justify-between bg-[#121929] border border-red-500/30 rounded-xl p-3 shadow-inner">
+                        <span id="generatedPassword" class="text-red-400 font-mono text-sm break-all select-all tracking-wide"></span>
+                        <button id="copyBtn" class="text-xs font-mono font-bold text-cyan-400 hover:text-cyan-300 ml-2 uppercase">[ COPY ]</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Interface Operational JavaScript Block -->
+    <script>
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const charCount = document.getElementById('charCount');
+        const createBtn = document.getElementById('createBtn');
+        const urlSafeMode = document.getElementById('urlSafeMode');
+        const outputContainer = document.getElementById('outputContainer');
+        const generatedPassword = document.getElementById('generatedPassword');
+        const copyBtn = document.getElementById('copyBtn');
+
+        passwordInput.addEventListener('input', () => {
+            charCount.textContent = passwordInput.value.length;
+        });
+
+        toggleBtn.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = 'HIDE';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = 'SHOW';
+            }
+        });
+
+        async function deterministicGenerate(inputStr, isUrlSafe) {
+            const msgBuffer = new TextEncoder().encode(inputStr);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            
+            let base64String = btoa(String.fromCharCode.apply(null, hashArray));
+            
+            if (isUrlSafe) {
+                return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '').substring(0, 16);
+            } else {
+                return base64String.substring(0, 14) + '!@';
+            }
+        }
+
+        createBtn.addEventListener('click', async () => {
+            const val = passwordInput.value;
+            if(!val) return alert("System prompt: Please input your verification phrase first.");
+            
+            const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
+            generatedPassword.textContent = secureOutput;
+            outputContainer.classList.remove('hidden');
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(generatedPassword.textContent);
+            copyBtn.textContent = '[ COPIED ]';
+            setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
+        });
+    </script>
+</body>
+</html>
