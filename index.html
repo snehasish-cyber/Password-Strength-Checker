@@ -79,8 +79,9 @@
             
             <!-- Social Icons -->
             <div class="flex space-x-5 mt-3 text-gray-500">
-                <a href="#" class="hover:text-red-400 transition-colors"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-x-twitter text-lg"></i></a>
+                <a href="#" onclick="event.preventDefault(); toggleModal();" class="hover:text-red-400 transition-colors">
+                    <i class="fa-brands fa-linkedin-in text-lg"></i>
+                </a>
                 <!-- Updated line below -->
                 <a href="https://github.com/snehasish-cyber" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
                     <i class="fa-brands fa-github text-lg"></i>
@@ -149,6 +150,18 @@
                 <!-- Warning Notification Message Box -->
                 <div class="mt-5 border-t border-slate-900 pt-4 flex items-start space-x-2 text-[11px] leading-relaxed text-red-400/70 text-center justify-center">
                     <p>🔒 Security protocol: Keep your master input passphrase memorized; the generated algorithmic equivalent remains fully reproducible on demand.</p>
+                </div>
+                <!-- Team Modal Structure -->
+                <div id="teamModal" class="fixed inset-0 z-50 flex items-center justify-center hidden backdrop-blur-sm bg-black/60">
+                    <div class="bg-[#0d111a] border border-red-500/30 p-6 rounded-2xl w-80 shadow-2xl">
+                        <h3 class="text-red-500 font-mono font-bold mb-4 text-center">DEVELOPMENT TEAM</h3>
+                        <div class="space-y-3">
+                            <a href="URL_FOR_SNEHASISH" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Snehasish</a>
+                            <a href="URL_FOR_ADRISHA" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Adrisha</a>
+                            <a href="URL_FOR_ANISH" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Anish</a>
+                        </div>
+                        <button onclick="toggleModal()" class="mt-6 w-full text-xs text-gray-500 hover:text-red-400 uppercase font-mono">[ Close ]</button>
+                    </div>
                 </div>
 
                 <!-- Output Display Container -->
@@ -339,6 +352,18 @@
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
 });
+// Toggle Team Modal
+const teamModal = document.getElementById('teamModal');
+function toggleModal() {
+    teamModal.classList.toggle('hidden');
+}
+
+// Close modal if user clicks outside the box
+window.onclick = function(event) {
+    if (event.target == teamModal) {
+        toggleModal();
+    }
+}
     </script>
 </body>
 </html>
