@@ -306,9 +306,21 @@
         }
 
         createBtn.addEventListener('click', async (event) => {
-            event.preventDefault(); // <--- ADD THIS LINE
+            event.preventDefault();
             
-            const val = passwordInput.value;
+            let val = passwordInput.value;
+            
+            // --- NEW: URL-Safe Sanitization ---
+            if (urlSafeMode.checked) {
+                // Remove #, &, /, ? symbols automatically
+                const cleanVal = val.replace(/[#&/?]/g, '');
+                if (cleanVal !== val) {
+                    val = cleanVal;
+                    passwordInput.value = val; // Update the UI to show the clean password
+                    charCount.textContent = val.length; // Update character count
+                }
+            }
+            
             if(!val) return alert("System prompt: Please input your verification phrase first.");
             
             const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
