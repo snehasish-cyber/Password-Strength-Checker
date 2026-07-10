@@ -276,28 +276,23 @@
         });
 
         // Smart Password Enhancer (Upgrades base input to Enterprise standards)
+        asy// Smart Password Enhancer (Upgrades base input to Enterprise standards)
         async function deterministicGenerate(inputStr, isUrlSafe) {
             let result = inputStr;
             
-            // 1. Substitute common letters for numbers/symbols
-            result = result.replace(/e/gi, '3').replace(/i/gi, '1').replace(/o/gi, '0');
+            // 1. Substitute common letters (Only lowercase, so we don't destroy user's intentional capitals)
+            result = result.replace(/e/g, '3').replace(/i/g, '1').replace(/o/g, '0');
             if (!isUrlSafe) {
-                result = result.replace(/a/gi, '@').replace(/s/gi, '$');
+                result = result.replace(/a/g, '@').replace(/s/g, '$');
             }
             
-            // 2. Guarantee at least one Uppercase letter
-            if (!/[A-Z]/.test(result)) {
-                result = result.charAt(0).toUpperCase() + result.slice(1);
-                // Fallback if the first character wasn't a letter
-                if (!/[A-Z]/.test(result)) result = 'X' + result; 
-            }
+            // 2. Guarantee Character Types (Appended neatly to the END so the base word remains readable)
+            if (!/[A-Z]/.test(result)) result += 'U'; // Adds an uppercase if missing
+            if (!/[a-z]/.test(result)) result += 'p'; // Adds a lowercase if missing
+            if (!/[0-9]/.test(result)) result += '9'; // Adds a number if missing
+            if (!/[^a-zA-Z0-9]/.test(result)) result += (isUrlSafe ? '_' : '#'); // Adds a symbol if missing
             
-            // 3. Guarantee Lowercase, Number, and Special Character
-            if (!/[a-z]/.test(result)) result += 'p';
-            if (!/[0-9]/.test(result)) result += '9';
-            if (!/[^a-zA-Z0-9]/.test(result)) result += (isUrlSafe ? '_' : '#');
-            
-            // 4. Pad length to ensure it hits the 14-character Enterprise minimum
+            // 3. Pad length to ensure it hits the 14-character Enterprise minimum
             const padPattern = isUrlSafe ? "_s3cUre9" : "!s3cUr3$";
             let index = 0;
             while (result.length < 14) {
