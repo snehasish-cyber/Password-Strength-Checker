@@ -242,7 +242,7 @@
 
             // Update visual meter based on score
             if (val.length === 0) {
-                strengthText.textContent = '[ AWAITING INPUT ]';
+                strengthText.textContent = 'AWAITING INPUT';
                 strengthText.className = 'text-[10px] font-mono text-gray-600 tracking-widest uppercase';
                 strengthBar.style.width = '0%';
                 
@@ -279,7 +279,7 @@
                 // GREY OUT THE BUTTON: Password is already strong!
                 createBtn.disabled = true;
                 createBtn.className = disabledBtnStyle;
-                createBtn.textContent = "[ ALREADY SECURE ]";
+                createBtn.textContent = " ALREADY SECURE ";
             }
         });
 
