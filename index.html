@@ -216,6 +216,9 @@
             const val = passwordInput.value;
             charCount.textContent = val.length;
             
+            // --- NEW: Instantly hide the old generated password when typing ---
+            outputContainer.classList.add('hidden');
+            
             const score = calculateStrength(val);
             
             // Define our two button styles (Active and Greyed-Out)
@@ -264,7 +267,7 @@
                 createBtn.textContent = "[ ALREADY SECURE ]";
             }
         });
-
+        
         toggleBtn.addEventListener('click', () => {
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
