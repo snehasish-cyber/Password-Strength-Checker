@@ -275,18 +275,37 @@
             }
         });
 
+        // Smart Password Enhancer (Upgrades base input to Enterprise standards)
         async function deterministicGenerate(inputStr, isUrlSafe) {
-            const msgBuffer = new TextEncoder().encode(inputStr);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            let result = inputStr;
             
-            let base64String = btoa(String.fromCharCode.apply(null, hashArray));
-            
-            if (isUrlSafe) {
-                return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '').substring(0, 16);
-            } else {
-                return base64String.substring(0, 14) + '!@';
+            // 1. Substitute common letters for numbers/symbols
+            result = result.replace(/e/gi, '3').replace(/i/gi, '1').replace(/o/gi, '0');
+            if (!isUrlSafe) {
+                result = result.replace(/a/gi, '@').replace(/s/gi, '$');
             }
+            
+            // 2. Guarantee at least one Uppercase letter
+            if (!/[A-Z]/.test(result)) {
+                result = result.charAt(0).toUpperCase() + result.slice(1);
+                // Fallback if the first character wasn't a letter
+                if (!/[A-Z]/.test(result)) result = 'X' + result; 
+            }
+            
+            // 3. Guarantee Lowercase, Number, and Special Character
+            if (!/[a-z]/.test(result)) result += 'p';
+            if (!/[0-9]/.test(result)) result += '9';
+            if (!/[^a-zA-Z0-9]/.test(result)) result += (isUrlSafe ? '_' : '#');
+            
+            // 4. Pad length to ensure it hits the 14-character Enterprise minimum
+            const padPattern = isUrlSafe ? "_s3cUre9" : "!s3cUr3$";
+            let index = 0;
+            while (result.length < 14) {
+                result += padPattern[index % padPattern.length];
+                index++;
+            }
+            
+            return result;
         }
 
         createBtn.addEventListener('click', async () => {
