@@ -319,40 +319,50 @@
             
             return result;
         }
-
+        // 1. Password Generation Logic
         createBtn.addEventListener('click', async (event) => {
-    event.preventDefault();
-    
-    let val = passwordInput.value;
-    
-    // Auto-sanitize if URL-safe mode is active
-    if (urlSafeMode.checked) {
-        val = val.replace(/[#&/?]/g, '');
-        passwordInput.value = val; // Update the UI input
-        charCount.textContent = val.length;
-    }
-    
-    if(!val) return alert("System prompt: Please input your verification phrase first.");
-    
-    // Generate the NEW version
-    const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
-    generatedPassword.textContent = secureOutput;
-    
-    // Show the new result
-    outputContainer.classList.remove('hidden');
-});
-        
+            event.preventDefault();
+            let val = passwordInput.value;
 
+            // Auto-sanitize if URL-safe mode is active
+            if (urlSafeMode.checked) {
+                val = val.replace(/[#&?]/g, '');
+                passwordInput.value = val; // Update the UI input
+                charCount.textContent = val.length;
+            }
+
+            if (!val) return alert("System prompt: Please input your verification phrase first.");
+
+            // Generate the NEW version
+            const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
+            generatedPassword.textContent = secureOutput;
+
+            // Show the new result
+            outputContainer.classList.remove('hidden');
+        });
+
+        // 2. Copy Button Logic
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(generatedPassword.textContent);
             copyBtn.textContent = '[ COPIED ]';
             setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
         });
-        // NEW: Clear output immediately when URL-safe mode is toggled
+
+        // 3. URL-Safe Mode Toggle (with Background Color Change)
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
-});
-// Toggle Team Modal
+    
+            // This targets the container we added ID="bg-container" to
+            const bgContainer = document.getElementById('bg-container');
+    
+            if (urlSafeMode.checked) {
+                // Apply Indigo for URL-safe mode
+                if (bgContainer) bgContainer.style.backgroundColor = '#312e81'; 
+            } else {
+                // Revert to original
+                if (bgContainer) bgContainer.style.backgroundColor = ''; 
+            }
+        });
 const teamModal = document.getElementById('teamModal');
 function toggleModal() {
     teamModal.classList.toggle('hidden');
