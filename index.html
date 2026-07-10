@@ -178,16 +178,39 @@
         const strengthBar = document.getElementById('strengthBar');
 
         // Function to calculate strength score (0 to 4)
+        // Professional-grade strength calculator
         function calculateStrength(password) {
-            let score = 0;
             if (!password) return 0;
-            if (password.length > 7) score += 1;
-            if (/[A-Z]/.test(password)) score += 1;
-            if (/[0-9]/.test(password)) score += 1;
-            if (/[^A-Za-z0-9]/.test(password)) score += 1;
-            return score;
-        }
 
+            let length = password.length;
+            let charTypes = 0;
+
+            // 1. Check character diversity
+            if (/[a-z]/.test(password)) charTypes += 1; // Has lowercase
+            if (/[A-Z]/.test(password)) charTypes += 1; // Has uppercase
+            if (/[0-9]/.test(password)) charTypes += 1; // Has number
+            if (/[^a-zA-Z0-9]/.test(password)) charTypes += 1; // Has special character
+
+            // 2. Strict Security Gatekeeping
+            
+            // Fails minimum length requirement (e.g., ff@12E)
+            if (length < 8) {
+                return 2; // Returns WEAK score
+            }
+
+            // Passes advanced length and high complexity
+            if (length >= 12 && charTypes >= 3) {
+                return 4; // Returns STRONG score
+            }
+
+            // Passes minimum length and moderate complexity
+            if (length >= 8 && charTypes >= 2) {
+                return 3; // Returns MEDIUM score
+            }
+
+            // Defaults to WEAK if it's long but just one character type (e.g., aaaaaaaaa)
+            return 2; 
+        }
         // Main input event listener updated with strength UI logic
         passwordInput.addEventListener('input', () => {
             const val = passwordInput.value;
