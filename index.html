@@ -178,7 +178,7 @@
         const strengthBar = document.getElementById('strengthBar');
 
         // Function to calculate strength score (0 to 4)
-        // Professional-grade strength calculator
+        // Enterprise-grade strict strength calculator
         function calculateStrength(password) {
             if (!password) return 0;
 
@@ -186,29 +186,29 @@
             let charTypes = 0;
 
             // 1. Check character diversity
-            if (/[a-z]/.test(password)) charTypes += 1; // Has lowercase
-            if (/[A-Z]/.test(password)) charTypes += 1; // Has uppercase
-            if (/[0-9]/.test(password)) charTypes += 1; // Has number
-            if (/[^a-zA-Z0-9]/.test(password)) charTypes += 1; // Has special character
+            if (/[a-z]/.test(password)) charTypes += 1;
+            if (/[A-Z]/.test(password)) charTypes += 1;
+            if (/[0-9]/.test(password)) charTypes += 1;
+            if (/[^a-zA-Z0-9]/.test(password)) charTypes += 1;
 
-            // 2. Strict Security Gatekeeping
+            // 2. Enterprise Security Gatekeeping
             
-            // Fails minimum length requirement (e.g., ff@12E)
-            if (length < 8) {
+            // Fails modern minimum length (e.g., India1W@ is only 8 chars)
+            if (length < 10) {
                 return 2; // Returns WEAK score
             }
 
-            // Passes advanced length and high complexity
-            if (length >= 12 && charTypes >= 3) {
+            // Passes ultra-secure length and complexity
+            if (length >= 14 && charTypes >= 3) {
                 return 4; // Returns STRONG score
             }
 
-            // Passes minimum length and moderate complexity
-            if (length >= 8 && charTypes >= 2) {
+            // Passes moderate length (10-13 chars) and complexity
+            if (length >= 10 && charTypes >= 2) {
                 return 3; // Returns MEDIUM score
             }
 
-            // Defaults to WEAK if it's long but just one character type (e.g., aaaaaaaaa)
+            // Defaults to WEAK if it relies on length but no complexity
             return 2; 
         }
         // Main input event listener updated with strength UI logic
