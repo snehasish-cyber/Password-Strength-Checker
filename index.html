@@ -114,7 +114,7 @@
                     <button id="toggleBtn" class="absolute right-4 text-xs font-mono font-semibold text-gray-500 hover:text-cyan-400 transition-colors">SHOW</button>
                 </div>
 
-                <!-- NEW: Live Password Strength Meter -->
+                <!-- Live Password Strength Meter -->
                 <div class="mb-5 w-full px-1">
                     <div class="flex justify-between items-center mb-1.5">
                         <span class="text-[10px] font-mono text-gray-500 tracking-wider uppercase">Signal Strength</span>
@@ -173,11 +173,10 @@
         const generatedPassword = document.getElementById('generatedPassword');
         const copyBtn = document.getElementById('copyBtn');
         
-        // New Strength Indicator Elements
+        // Strength Indicator Elements
         const strengthText = document.getElementById('strengthText');
         const strengthBar = document.getElementById('strengthBar');
 
-        // Function to calculate strength score (0 to 4)
         // Enterprise-grade strict strength calculator
         function calculateStrength(password) {
             if (!password) return 0;
@@ -211,6 +210,7 @@
             // Defaults to WEAK if it relies on length but no complexity
             return 2; 
         }
+
         // Main input event listener updated with strength UI logic
         passwordInput.addEventListener('input', () => {
             const val = passwordInput.value;
