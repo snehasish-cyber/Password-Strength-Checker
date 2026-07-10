@@ -81,9 +81,11 @@
             <div class="flex space-x-5 mt-3 text-gray-500">
                 <a href="#" class="hover:text-red-400 transition-colors"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
                 <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-x-twitter text-lg"></i></a>
-                <a href="#" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-github text-lg"></i></a>
+                <!-- Updated line below -->
+                <a href="https://github.com/snehasish-cyber" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 transition-colors">
+                    <i class="fa-brands fa-github text-lg"></i>
+                </a>
             </div>
-        </div>
 
         <!-- Main Container Card -->
         <div class="w-full max-w-md bg-[#0d111a]/95 border border-red-500/20 rounded-2xl p-5 shadow-2xl shadow-red-950/20 backdrop-blur-md">
@@ -306,27 +308,26 @@
         }
 
         createBtn.addEventListener('click', async (event) => {
-            event.preventDefault();
-            
-            let val = passwordInput.value;
-            
-            // --- NEW: URL-Safe Sanitization ---
-            if (urlSafeMode.checked) {
-                // Remove #, &, /, ? symbols automatically
-                const cleanVal = val.replace(/[#&/?]/g, '');
-                if (cleanVal !== val) {
-                    val = cleanVal;
-                    passwordInput.value = val; // Update the UI to show the clean password
-                    charCount.textContent = val.length; // Update character count
-                }
-            }
-            
-            if(!val) return alert("System prompt: Please input your verification phrase first.");
-            
-            const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
-            generatedPassword.textContent = secureOutput;
-            outputContainer.classList.remove('hidden');
-        });
+    event.preventDefault();
+    
+    let val = passwordInput.value;
+    
+    // Auto-sanitize if URL-safe mode is active
+    if (urlSafeMode.checked) {
+        val = val.replace(/[#&/?]/g, '');
+        passwordInput.value = val; // Update the UI input
+        charCount.textContent = val.length;
+    }
+    
+    if(!val) return alert("System prompt: Please input your verification phrase first.");
+    
+    // Generate the NEW version
+    const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
+    generatedPassword.textContent = secureOutput;
+    
+    // Show the new result
+    outputContainer.classList.remove('hidden');
+});
         
 
         copyBtn.addEventListener('click', () => {
