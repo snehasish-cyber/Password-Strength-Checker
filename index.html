@@ -218,26 +218,50 @@
             
             const score = calculateStrength(val);
             
+            // Define our two button styles (Active and Greyed-Out)
+            const activeBtnStyle = "w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-mono font-bold py-3 rounded-xl shadow-lg shadow-red-950 transition-all text-sm tracking-widest uppercase active:scale-[0.99]";
+            const disabledBtnStyle = "w-full bg-[#121929] text-gray-600 border border-slate-800 cursor-not-allowed font-mono font-bold py-3 rounded-xl transition-all text-sm tracking-widest uppercase";
+
             // Update visual meter based on score
             if (val.length === 0) {
                 strengthText.textContent = '[ AWAITING_INPUT ]';
                 strengthText.className = 'text-[10px] font-mono text-gray-600 tracking-widest uppercase';
                 strengthBar.style.width = '0%';
+                
+                // Keep button active
+                createBtn.disabled = false;
+                createBtn.className = activeBtnStyle;
+                createBtn.textContent = "Execute Generation";
             } else if (score <= 2) {
                 strengthText.textContent = '[ WEAK_SECURITY ]';
                 strengthText.className = 'text-[10px] font-mono text-red-500 tracking-widest uppercase';
                 strengthBar.style.width = '33%';
                 strengthBar.className = 'h-full bg-red-500 transition-all duration-300 shadow-[0_0_8px_rgba(239,68,68,0.6)]';
+                
+                // Keep button active
+                createBtn.disabled = false;
+                createBtn.className = activeBtnStyle;
+                createBtn.textContent = "Execute Generation";
             } else if (score === 3) {
                 strengthText.textContent = '[ MEDIUM_INTEGRITY ]';
                 strengthText.className = 'text-[10px] font-mono text-yellow-500 tracking-widest uppercase';
                 strengthBar.style.width = '66%';
                 strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300 shadow-[0_0_8px_rgba(234,179,8,0.6)]';
+                
+                // Keep button active
+                createBtn.disabled = false;
+                createBtn.className = activeBtnStyle;
+                createBtn.textContent = "Execute Generation";
             } else {
                 strengthText.textContent = '[ STRONG_ENCRYPTION ]';
                 strengthText.className = 'text-[10px] font-mono text-cyan-400 tracking-widest uppercase';
                 strengthBar.style.width = '100%';
                 strengthBar.className = 'h-full bg-cyan-400 transition-all duration-300 shadow-[0_0_8px_rgba(6,182,212,0.6)]';
+                
+                // GREY OUT THE BUTTON: Password is already strong!
+                createBtn.disabled = true;
+                createBtn.className = disabledBtnStyle;
+                createBtn.textContent = "[ ALREADY SECURE ]";
             }
         });
 
