@@ -267,7 +267,7 @@
                 createBtn.textContent = "[ ALREADY SECURE ]";
             }
         });
-        
+
         toggleBtn.addEventListener('click', () => {
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
@@ -306,7 +306,9 @@
             return result;
         }
 
-        createBtn.addEventListener('click', async () => {
+        createBtn.addEventListener('click', async (event) => {
+            event.preventDefault(); // <--- ADD THIS LINE
+            
             const val = passwordInput.value;
             if(!val) return alert("System prompt: Please input your verification phrase first.");
             
