@@ -107,7 +107,7 @@
                 <!-- Instruction Box -->
                 <div class="bg-[#0d121f] border-l-2 border-red-500 rounded-r-xl p-3.5 text-xs leading-relaxed text-gray-400 mb-5">
                     ⚠️ Please provide a unique name combined with a symbol or number to create a secure password 
-                    <span class="text-gray-500 font-mono">(e.g., Kolkata@2025).</span>
+                    <span class="text-gray-500 font-mono">(e.g., Kolkata@2025!!).</span>
                 </div>
 
                 <!-- Input Group Box -->
@@ -121,7 +121,7 @@
                 <div class="mb-5 w-full px-1">
                     <div class="flex justify-between items-center mb-1.5">
                         <span class="text-[10px] font-mono text-gray-500 tracking-wider uppercase">Signal Strength</span>
-                        <span id="strengthText" class="text-[10px] font-mono text-gray-600 tracking-widest uppercase">[ AWAITING_INPUT ]</span>
+                        <span id="strengthText" class="text-[10px] font-mono text-gray-600 tracking-widest uppercase">AWAITING_INPUT</span>
                     </div>
                     <div class="w-full bg-[#121929] h-1.5 rounded-full overflow-hidden border border-slate-800">
                         <div id="strengthBar" class="h-full bg-transparent w-0 transition-all duration-300"></div>
@@ -157,7 +157,7 @@
                         <h3 class="text-red-500 font-mono font-bold mb-4 text-center">DEVELOPMENT TEAM</h3>
                         <div class="space-y-3">
                             <a href="https://www.linkedin.com/in/snehasish-das-cyber-specialist/" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Snehasish</a>
-                            
+                            <a href="" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Adrisha</a>
                             <a href="https://www.linkedin.com/in/anish-biswas-43a481421/" target="_blank" class="block w-full text-center py-2 bg-slate-900 hover:bg-slate-800 text-gray-200 text-sm font-mono rounded-lg transition-colors">Anish</a>
                         </div>
                         <button onclick="toggleModal()" class="mt-6 w-full text-xs text-gray-500 hover:text-red-400 uppercase font-mono">[ Close ]</button>
@@ -242,7 +242,7 @@
 
             // Update visual meter based on score
             if (val.length === 0) {
-                strengthText.textContent = '[ AWAITING_INPUT ]';
+                strengthText.textContent = '[ AWAITING INPUT ]';
                 strengthText.className = 'text-[10px] font-mono text-gray-600 tracking-widest uppercase';
                 strengthBar.style.width = '0%';
                 
@@ -251,7 +251,7 @@
                 createBtn.className = activeBtnStyle;
                 createBtn.textContent = "Execute Generation";
             } else if (score <= 2) {
-                strengthText.textContent = '[ WEAK_SECURITY ]';
+                strengthText.textContent = 'WEAK SECURITY';
                 strengthText.className = 'text-[10px] font-mono text-red-500 tracking-widest uppercase';
                 strengthBar.style.width = '33%';
                 strengthBar.className = 'h-full bg-red-500 transition-all duration-300 shadow-[0_0_8px_rgba(239,68,68,0.6)]';
@@ -261,7 +261,7 @@
                 createBtn.className = activeBtnStyle;
                 createBtn.textContent = "Execute Generation";
             } else if (score === 3) {
-                strengthText.textContent = '[ MEDIUM_INTEGRITY ]';
+                strengthText.textContent = 'MEDIUM SECURITY';
                 strengthText.className = 'text-[10px] font-mono text-yellow-500 tracking-widest uppercase';
                 strengthBar.style.width = '66%';
                 strengthBar.className = 'h-full bg-yellow-500 transition-all duration-300 shadow-[0_0_8px_rgba(234,179,8,0.6)]';
@@ -271,7 +271,7 @@
                 createBtn.className = activeBtnStyle;
                 createBtn.textContent = "Execute Generation";
             } else {
-                strengthText.textContent = '[ STRONG_ENCRYPTION ]';
+                strengthText.textContent = 'STRONG ENCRYPTION';
                 strengthText.className = 'text-[10px] font-mono text-cyan-400 tracking-widest uppercase';
                 strengthBar.style.width = '100%';
                 strengthBar.className = 'h-full bg-cyan-400 transition-all duration-300 shadow-[0_0_8px_rgba(6,182,212,0.6)]';
