@@ -327,12 +327,17 @@
             generatedPassword.textContent = secureOutput;
             outputContainer.classList.remove('hidden');
         });
+        
 
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(generatedPassword.textContent);
             copyBtn.textContent = '[ COPIED ]';
             setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
         });
+        // NEW: Clear output immediately when URL-safe mode is toggled
+        urlSafeMode.addEventListener('change', () => {
+            outputContainer.classList.add('hidden');
+});
     </script>
 </body>
 </html>
