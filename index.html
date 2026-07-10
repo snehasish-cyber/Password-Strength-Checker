@@ -295,6 +295,7 @@
 
         // Smart Password Enhancer (Guaranteed: Never touches your original text)
         async function deterministicGenerate(inputStr, isUrlSafe) {
+            console.log("Function deterministicGenerate started!");
             // We set 'result' to your original input and never call .replace() on it
             let result = inputStr; 
             let suffix = ""; 
