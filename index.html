@@ -59,7 +59,7 @@
         }
     </style>
 </head>
-<body <body class="min-h-screen bg-black transition-colors duration-500 text-gray-200 flex flex-col items-center py-8 px-4 font-sans selection:bg-red-500 selection:text-white"></body>
+<body class="min-h-screen text-gray-200 flex flex-col items-center py-8 px-4 font-sans selection:bg-red-500 selection:text-white">
 
     <!-- Ambient Grid Effect System -->
     <div class="cyber-grid"></div>
@@ -90,7 +90,7 @@
             </div>
 
         <!-- Main Container Card -->
-        <div <div id="bg-container" class="w-full max-w-md bg-[#0d111a]/95 border border-red-500/20 rounded-2xl p-5 shadow-2xl shadow-red-950/20 backdrop-blur-md">
+        <div class="w-full max-w-md bg-[#0d111a]/95 border border-red-500/20 rounded-2xl p-5 shadow-2xl shadow-red-950/20 backdrop-blur-md">
             
             <!-- Top Tab Selector -->
             <div class="w-full bg-gradient-to-r from-red-500 to-cyan-500 p-[1px] rounded-xl mb-5 shadow-lg shadow-red-500/10">
@@ -349,19 +349,8 @@
             setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
         });
         // NEW: Clear output immediately when URL-safe mode is toggled
-        // Look for this section in your code (around line 352)
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
-    
-            const bgContainer = document.getElementById('bg-container');
-    
-            if (urlSafeMode.checked) {
-                bgContainer.classList.add('bg-indigo-950');
-                bgContainer.classList.remove('bg-[#0d111a]/95'); // Remove the dark grey
-            } else {
-                bgContainer.classList.add('bg-[#0d111a]/95'); // Add the dark grey back
-                bgContainer.classList.remove('bg-blue-950');
-            }
 });
 // Toggle Team Modal
 const teamModal = document.getElementById('teamModal');
@@ -378,3 +367,4 @@ window.onclick = function(event) {
     </script>
 </body>
 </html>
+
