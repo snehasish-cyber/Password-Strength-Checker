@@ -59,7 +59,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen text-gray-200 flex flex-col items-center py-8 px-4 font-sans selection:bg-red-500 selection:text-white">
+<body id="bg-container" class="min-h-screen bg-black transition-colors duration-500 text-gray-200 flex flex-col items-center py-8 px-4 font-sans selection:bg-red-500 selection:text-white"></body>
 
     <!-- Ambient Grid Effect System -->
     <div class="cyber-grid"></div>
@@ -349,8 +349,19 @@
             setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
         });
         // NEW: Clear output immediately when URL-safe mode is toggled
+        // Look for this section in your code (around line 352)
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
+    
+            // ADD THESE LINES INSIDE THE BLOCK:
+            const bgContainer = document.getElementById('bg-container');
+            if (urlSafeMode.checked) {
+                bgContainer.classList.add('bg-blue-950');
+                bgContainer.classList.remove('bg-black');
+            } else {
+                bgContainer.classList.add('bg-black');
+                bgContainer.classList.remove('bg-blue-950');
+            }
 });
 // Toggle Team Modal
 const teamModal = document.getElementById('teamModal');
