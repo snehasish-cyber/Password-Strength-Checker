@@ -181,6 +181,16 @@
 
     <!-- Interface Operational JavaScript Block -->
     <script>
+        // Reset status when user starts typing a new password
+        passwordInput.addEventListener('input', () => {
+            const statusLabel = document.getElementById('breachStatus');
+    
+            // Set back to original text
+            statusLabel.textContent = "SYSTEM STATUS: BREACH MONITOR ACTIVE";
+    
+            // Reset back to original color (text-cyan-400)
+            statusLabel.className = "text-xs font-mono text-cyan-400 tracking-widest uppercase mb-1";
+        });
         console.log("V1.0 - File successfully loaded");
         const passwordInput = document.getElementById('passwordInput');
         const toggleBtn = document.getElementById('toggleBtn');
