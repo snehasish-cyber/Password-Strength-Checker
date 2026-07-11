@@ -295,7 +295,7 @@
                 toggleBtn.textContent = 'SHOW';
             }
         });
-        aasync function checkBreach(password) {
+        async function checkBreach(password) {
             // 1. Hash the password into SHA-1
             const msgUint8 = new TextEncoder().encode(password);
             const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8);
