@@ -75,7 +75,7 @@
             </div>
             <!-- Title with Red Cyber Accent Linkage -->
             <h1 class="text-4xl font-bold tracking-wide text-red-500 mb-1 text-center drop-shadow-[0_0_12px_rgba(239,68,68,0.4)]">Password Strength Checker</h1>
-            <p class="text-xs font-mono text-cyan-400 tracking-widest uppercase mb-1">SYSTEM STATUS: BREACH MONITOR ACTIVE</p>
+            <p id="breachStatus" class="text-xs font-mono text-cyan-400 tracking-widest uppercase mb-1">SYSTEM STATUS: BREACH MONITOR ACTIVE</p>
             <p class="text-sm text-gray-400 font-medium tracking-wide text-center">Developed by Snehasish, Adrisha & Anish</p>
             
             <!-- Social Icons -->
@@ -295,6 +295,24 @@
                 toggleBtn.textContent = 'SHOW';
             }
         });
+        aasync function checkBreach(password) {
+            // 1. Hash the password into SHA-1
+            const msgUint8 = new TextEncoder().encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const fullHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    
+            // 2. Split into Prefix (first 5 chars) and Suffix (the rest)
+            const prefix = fullHash.substring(0, 5);
+            const suffix = fullHash.substring(5);
+
+            // 3. Query the API
+            const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+            const data = await response.text();
+
+            // 4. Return true if leaked (found in data), false if safe
+            return data.includes(suffix);
+            }
 
         // Smart Password Enhancer (Guaranteed: Never touches your original text)
         async function deterministicGenerate(inputStr, isUrlSafe) {
@@ -324,6 +342,7 @@
             return result;
         }
         // 1. Password Generation Logic
+        // 1. Password Generation Logic
         createBtn.addEventListener('click', async (event) => {
             event.preventDefault();
             let val = passwordInput.value;
@@ -331,11 +350,26 @@
             // Auto-sanitize if URL-safe mode is active
             if (urlSafeMode.checked) {
                 val = val.replace(/[#&?]/g, '');
-                passwordInput.value = val; // Update the UI input
+                passwordInput.value = val; 
                 charCount.textContent = val.length;
             }
 
             if (!val) return alert("System prompt: Please input your verification phrase first.");
+
+            // --- NEW BREACH CHECK INTEGRATION ---
+            const statusLabel = document.getElementById('breachStatus');
+            const isLeaked = await checkBreach(val);
+
+            if (isLeaked) {
+                statusLabel.textContent = "SYSTEM STATUS: COMPROMISED";
+                statusLabel.classList.remove('text-cyan-400', 'text-green-500');
+                statusLabel.classList.add('text-red-500');
+            } else {
+                statusLabel.textContent = "SYSTEM STATUS: SECURE";
+                statusLabel.classList.remove('text-cyan-400', 'text-red-500');
+                statusLabel.classList.add('text-green-500');
+            }
+            // ------------------------------------
 
             // Generate the NEW version
             const secureOutput = await deterministicGenerate(val, urlSafeMode.checked);
@@ -356,7 +390,7 @@
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
             // The background color will no longer change
-        });
+            });
 const teamModal = document.getElementById('teamModal');
 function toggleModal() {
     teamModal.classList.toggle('hidden');
