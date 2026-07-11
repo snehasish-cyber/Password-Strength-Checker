@@ -352,20 +352,10 @@
             setTimeout(() => copyBtn.textContent = '[ COPY ]', 2000);
         });
 
-        // 3. URL-Safe Mode Toggle (with Background Color Change)
+        // 3. URL-Safe Mode Toggle
         urlSafeMode.addEventListener('change', () => {
             outputContainer.classList.add('hidden');
-    
-            // This targets the container we added ID="bg-container" to
-            const bgContainer = document.getElementById('bg-container');
-    
-            if (urlSafeMode.checked) {
-                // Apply Indigo for URL-safe mode
-                if (bgContainer) bgContainer.style.backgroundColor = '#312e81'; 
-            } else {
-                // Revert to original
-                if (bgContainer) bgContainer.style.backgroundColor = ''; 
-            }
+            // The background color will no longer change
         });
 const teamModal = document.getElementById('teamModal');
 function toggleModal() {
