@@ -100,7 +100,7 @@
             </div>
 
             <!-- Inside Inner Section Container -->
-            <div class="bg-[#080b12] border border-slate-900 rounded-xl p-5">
+            <div id="bg-container" class="bg-[#080b12] border border-slate-900 rounded-xl p-5">
                 <h2 class="text-cyan-400 font-mono font-semibold text-sm mb-4 tracking-wider uppercase flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> Generate Secure Password
                 </h2>
@@ -164,21 +164,24 @@
                         <button onclick="toggleModal()" class="mt-6 w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-mono font-bold py-3 rounded-xl shadow-lg shadow-red-950 transition-all text-sm tracking-widest uppercase active:scale-[0.99]">Close</button>
                 </div>
 
-                <!-- Output Display Container -->
-                <div id="outputContainer" class="mt-5 hidden border-t border-slate-900 pt-4">
+                
+                
+
+            </div>
+            <!-- Output Display Container -->
+            <div id="outputContainer" class="mt-5 hidden border-t border-slate-900 pt-4">
                     <label class="block text-xs font-mono text-cyan-400 mb-2 tracking-wider uppercase">Algorithmic Output Hash:</label>
                     <div class="flex items-center justify-between bg-[#121929] border border-red-500/30 rounded-xl p-3 shadow-inner">
                         <span id="generatedPassword" class="text-red-400 font-mono text-sm break-all select-all tracking-wide"></span>
                         <button id="copyBtn" class="text-xs font-mono font-bold text-cyan-400 hover:text-cyan-300 ml-2 uppercase">[ COPY ]</button>
                     </div>
                 </div>
-
-            </div>
         </div>
     </div>
 
     <!-- Interface Operational JavaScript Block -->
     <script>
+        console.log("V1.0 - File successfully loaded");
         const passwordInput = document.getElementById('passwordInput');
         const toggleBtn = document.getElementById('toggleBtn');
         const charCount = document.getElementById('charCount');
